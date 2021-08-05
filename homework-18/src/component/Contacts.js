@@ -1,6 +1,6 @@
-import React,{useEffect} from "react";
+import React,{useState, useEffect} from "react";
 import Contact from "./Contact";
-
+import './style.css'
 
 const contacts = [{
     firstName:"Барней",
@@ -38,22 +38,39 @@ const contacts = [{
 
 const Contacts = () => {
 
-//   const [contact, setContact] = useEffect();
+  const [searchItem, setSearchItem] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   
+
+useEffect(() => {
+    const results = contacts.filter(contact => 
+        contact.firstName.toLowerCase().includes(searchItem.toLowerCase())||
+        contact.lastName.toLowerCase().includes(searchItem.toLowerCase())||
+        contact.phone.toLowerCase().includes(searchItem.toLowerCase())
+        );
+    setSearchResults(results);
+  }, [searchItem]);
+
+
+const handleSearchChange =(e)=>{
+    setSearchItem(e.target.value)
+}
+
     return(
 
        <div className="wrapper">
            <div className="contact">
-               <span>Contacts</span>
+               <span className='contacts'>Contacts</span>
            </div>
            <div className="input">
-               <input type="text" placeholder="search" />
+               <input type="text" placeholder="search" onChange={handleSearchChange} value={searchItem} />
            </div>
-            <div className="contacts_wrapper">{contacts.map(contact => 
+            <div className="contacts_wrapper">{searchResults.map((contact,index)=> 
                 <Contact firstName={contact.firstName}
                 lastName = {contact.lastName}
                 phone = {contact.phone}
                 gender = {contact.gender}
+                key = {index}
                 />)}
             </div> 
         </div>
@@ -61,3 +78,5 @@ const Contacts = () => {
 }
 
 export default Contacts;
+
+

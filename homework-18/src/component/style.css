@@ -86,3 +86,12 @@ input {
 input[placeholder]{
 text-align: center;
 }
+
+.contacts{
+    cursor: pointer;
+    color: rgb(20, 45, 49);
+}
+
+.contacts:hover{
+    color: rgb(10, 95, 38);
+}
